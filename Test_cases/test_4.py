@@ -29,7 +29,7 @@ def test_4(app_config):
         button_Check.click()
         sleep(1)
 
-        assert result.text == 'OK. Good answersv'
+        assert result.text == 'OK. Good answers'
     finally:
         driver.close()
         driver.quit()
