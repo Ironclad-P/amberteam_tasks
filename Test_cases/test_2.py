@@ -1,30 +1,27 @@
 from selenium import webdriver
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.common.by import By
 from pytest import mark
-from time import sleep
-
 
 @mark.task2
-def test_2(app_config):
-    driver = getattr(webdriver, app_config.which_browser)()
-    url = 'https://antycaptcha.amberteam.pl:5443/exercises/exercise2?seed=45b24f59-6579-4087-ad13-f6f5949aace5'
-    
-    try:
-        driver.get(url)
+def test_2(app_setup, task2_url):
+    driver = app_setup
+    driver.get(task2_url)
+    wait = WebDriverWait(driver,100)
 
-        editBox = driver.find_element_by_id('t14')
-        button_B1 = driver.find_element_by_id('btnButton1')
-        button_Check = driver.find_element_by_id('solution')
-        result = driver.find_element_by_id('trail')
-        
-        editBox.clear()
-        editBox.send_keys('Evening level television.')
-        sleep(1)
-        button_B1.click()
-        sleep(1)
-        button_Check.click()
-        sleep(1)
+    editBox = driver.find_element_by_id('t14')
+    buttonB1 = driver.find_element_by_id('btnButton1')
+    buttonCheck = driver.find_element_by_id('solution')
+    result = driver.find_element_by_id('trail')
 
-        assert result.text == 'OK. Good answer'
-    finally:
-        driver.close()
-        driver.quit()
+    editBox.clear()
+    editBox.send_keys('Evening level television.')
+    text = 'Evening level television.b1'
+
+    buttonB1.click()
+    wait.until(ec.text_to_be_present_in_element((By.ID, 'trail'), text))
+    buttonCheck.click()
+
+    wait.until(ec.text_to_be_present_in_element((By.ID, 'trail'), 'OK'))
+    assert result.text == 'OK. Good answer'

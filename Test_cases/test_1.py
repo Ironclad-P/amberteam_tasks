@@ -1,29 +1,24 @@
 from selenium import webdriver
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 from pytest import mark
-from time import sleep
-
 
 @mark.task1
-def test_1(app_config):
-    driver = getattr(webdriver, app_config.which_browser)()
-    url = 'https://antycaptcha.amberteam.pl:5443/exercises/exercise1?seed=52a1bfe6-fd37-4587-a5cc-27a00a978d48'
+def test_1(app_setup, task1_url):
+    driver = app_setup
+    driver.get(task1_url)
+    wait = WebDriverWait(driver,10)
 
-    try:
-        driver.get(url)
+    buttonB1 = driver.find_element_by_id('btnButton1')
+    buttonCheck = driver.find_element_by_id('solution')
+    result = driver.find_element_by_id('trail')
 
-        button_B1 = driver.find_element_by_id('btnButton1')
-        button_Check = driver.find_element_by_id('solution')
-        result = driver.find_element_by_id('trail')
-
-        i = 0
-        while i < 3:
-            button_B1.click()
-            i = i + 1
-            sleep(1)
-        
-        button_Check.click()
-        sleep(1)
-        assert result.text == 'OK. Good answer'
-    finally:
-        driver.close()
-        driver.quit()
+    for x in range(1,4):
+        text = 'b1' * x
+        buttonB1.click()
+        wait.until(EC.text_to_be_present_in_element((By.ID, 'trail'), text))
+    
+    buttonCheck.click()
+    wait.until(EC.text_to_be_present_in_element((By.ID, 'trail'), 'OK'))
+    assert result.text == 'OK. Good answer'
