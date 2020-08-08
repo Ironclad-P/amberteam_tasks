@@ -28,12 +28,12 @@ def app_setup(app_config):
 
 @fixture()
 def task1_url():
-    url = 'https://antycaptcha.amberteam.pl:5443/exercises/exercise1?seed=52a1bfe6-fd37-4587-a5cc-27a00a978d48'
+    url = 'https://antycaptcha.amberteam.pl:5443/exercises/exercise1'
     return url
 
 @fixture()
 def task2_url():
-    url = 'https://antycaptcha.amberteam.pl:5443/exercises/exercise2?seed=45b24f59-6579-4087-ad13-f6f5949aace5'
+    url = 'https://antycaptcha.amberteam.pl:5443/exercises/exercise2'
     return url
 
 @fixture()
