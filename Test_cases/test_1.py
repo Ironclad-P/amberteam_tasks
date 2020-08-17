@@ -14,13 +14,14 @@ def test_1(app_setup, task1_url):
     btnB1 = driver.find_element_by_id('btnButton1')         # B1 button
     btnB2 = driver.find_element_by_id('btnButton2')         # B2 button
     btnCheck = driver.find_element_by_id('solution')        # Check button
-    numberOfSteps = len(driver.find_elements_by_xpath('/html/body/div/table/tbody/tr'))         # number of steps in instruction
+    steps = driver.find_elements_by_css_selector('td >code')            # pointer to all box texts in instruction 
+    numberOfSteps = len(steps)         # number of steps in instruction + expected outcome
     instruction = []           # empty list for instructions in the task
     currentOut = driver.find_element_by_id('trail')         # outcome web element
     currentOutTxt = currentOut.text         # string for compare changes after selected option (Trail...)
 
-    for i in range(2, numberOfSteps + 1):           # create list of steps to execute
-        step = driver.find_element_by_xpath("/html/body/div/table/tbody/tr[{}]/td[2]/code".format(i)).text
+    for i in range(1, numberOfSteps):           # create list of teststeps to execute
+        step = steps[i].text
         instruction.append(step)
 
     for x in instruction:          # loop to execute instruction steps
