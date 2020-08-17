@@ -20,7 +20,7 @@ def test_1(app_setup, task1_url):
     currentOut = driver.find_element_by_id('trail')         # outcome web element
     currentOutTxt = currentOut.text         # string for compare changes after selected option (Trail...)
 
-    for i in range(1, numberOfSteps):           # create list of teststeps to execute
+    for i in range(numberOfSteps - 1):           # create list of teststeps to execute
         step = steps[i].text
         instruction.append(step)
 
