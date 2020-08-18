@@ -11,13 +11,13 @@ def test_1(app_setup, task1_url):
     driver.get(task1_url)
     wait = WebDriverWait(driver,10)
 
-    btnB1 = driver.find_element_by_id('btnButton1')         # B1 button
-    btnB2 = driver.find_element_by_id('btnButton2')         # B2 button
-    btnCheck = driver.find_element_by_id('solution')        # Check button
-    steps = driver.find_elements_by_css_selector('td >code')            # pointer to all box texts in instruction 
+    btnB1 = driver.find_element(By.ID, 'btnButton1')         # B1 button
+    btnB2 = driver.find_element(By.ID, 'btnButton2')         # B2 button
+    btnCheck = driver.find_element(By.ID, 'solution')        # Check button
+    steps = driver.find_elements(By.CSS_SELECTOR, 'td >code')            # pointer to all box texts in instruction 
     numberOfSteps = len(steps)         # number of steps in instruction + expected outcome
     instruction = []           # empty list for instructions in the task
-    currentOut = driver.find_element_by_id('trail')         # outcome web element
+    currentOut = driver.find_element(By.ID, 'trail')         # outcome web element
     currentOutTxt = currentOut.text         # string for compare changes after selected option (Trail...)
 
     for i in range(numberOfSteps - 1):           # create list of teststeps to execute
